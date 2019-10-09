@@ -1,12 +1,19 @@
 package br.com.mobilepoint.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotNull;
 
 @Entity(name="funcionario")
@@ -29,13 +36,18 @@ public class Funcionario {
 	@Column(nullable=false)
 	private String password;	
 	
-	@ManyToOne
+	@ManyToOne(targetEntity = Empresa.class)
 	@JoinColumn(name="empresa_fk")
 	private Empresa empresa;
 	
 	@ManyToOne(targetEntity = Turno.class)
 	@JoinColumn(name = "turno_fk")
 	private Turno turno;
+	
+	@OneToMany(targetEntity = PontoBatido.class, fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
+	@JoinTable(name="funcionario_pontos", joinColumns = @JoinColumn(name = "funcionario_id"), inverseJoinColumns = @JoinColumn(name = "pontos_id"))
+	@OrderColumn(name="funcionario")
+	private List<PontoBatido> pontosBatidos = new ArrayList<PontoBatido>();
 	
 	private boolean administrator = false;
 	
@@ -123,6 +135,14 @@ public class Funcionario {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public List<PontoBatido> getPontosBatidos() {
+		return pontosBatidos;
+	}
+
+	public void setPontosBatidos(List<PontoBatido> pontosBatidos) {
+		this.pontosBatidos = pontosBatidos;
 	}
 
 	@Override

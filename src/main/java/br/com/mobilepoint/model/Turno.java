@@ -20,6 +20,8 @@ public class Turno {
 	
 	private Date intervalo = new Date();
 	
+	private Integer tempoTolerancia;
+	
 	private boolean ativo = false; 
 	
 	public Turno() {
@@ -72,6 +74,14 @@ public class Turno {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public Integer getTempoTolerancia() {
+		return tempoTolerancia;
+	}
+
+	public void setTempoTolerancia(Integer tempoTolerancia) {
+		this.tempoTolerancia = tempoTolerancia;
 	}
 
 	@Override

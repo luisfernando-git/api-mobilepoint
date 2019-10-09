@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.mobilepoint.model.Funcionario;
 import br.com.mobilepoint.model.Turno;
-import br.com.mobilepoint.repository.FuncionarioRepository;
 import br.com.mobilepoint.repository.TurnoRepository;
 import br.com.mobilepoint.utils.NegocioException;
 
@@ -25,9 +23,6 @@ public class TurnoController {
 	@Autowired
 	private TurnoRepository repo;
 	
-	@Autowired
-	private FuncionarioRepository funcionarioRepository;
-	
 	@GetMapping
 	public List<Turno> getAll() {
 		return repo.findAll();
@@ -35,15 +30,7 @@ public class TurnoController {
 	
 	@PostMapping
 	public String create(@RequestBody Turno novo) {
-		repo.save(novo);
-		
-		if (novo.getFuncionarios() != null && !novo.getFuncionarios().isEmpty()) {
-			for (Funcionario func : novo.getFuncionarios()) {
-				func.setTurno(novo);
-				funcionarioRepository.save(func);
-			}
-		}
-		
+		repo.save(novo);		
 		return novo.getId();
 	}
 	
@@ -61,25 +48,7 @@ public class TurnoController {
 	public void update(@PathVariable("id") String id, @RequestBody Turno turno) {
 		if (!id.equals(turno.getId())) {
 			throw new NegocioException("Id do turno está incorreto!");
-		}
-		
-		if (turno.getFuncionarios() != null && !turno.getFuncionarios().isEmpty()) {
-			for (Funcionario func : turno.getFuncionarios()) {
-				func.setTurno(turno);
-				funcionarioRepository.save(func);
-			}
-		}
-		
+		}		
 		repo.save(turno);
-	}
-	
-	@DeleteMapping("/{id}/funcionarios/{idFuncionario}")
-	public void deleteFuncionario(@PathVariable("id") String id, @PathVariable("idFuncionario") String idFuncionario) {
-		Turno turno = repo.findById(id).get();
-		turno.removerFuncionario(idFuncionario);
-		repo.save(turno);
-		Funcionario funcionario = funcionarioRepository.findById(idFuncionario).get();
-		funcionario.setTurno(null);
-		funcionarioRepository.save(funcionario);
 	}
 }

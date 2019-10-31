@@ -28,6 +28,8 @@ public class Funcionario {
 	
 	private Integer matricula;
 	
+	private String email;
+	
 	@NotNull
 	@Column(unique=true, nullable=false)
 	private String username;
@@ -143,6 +145,14 @@ public class Funcionario {
 
 	public void setPontosBatidos(List<PontoBatido> pontosBatidos) {
 		this.pontosBatidos = pontosBatidos;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

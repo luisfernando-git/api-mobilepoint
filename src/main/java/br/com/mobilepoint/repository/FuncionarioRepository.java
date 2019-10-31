@@ -12,4 +12,6 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, String
 
 	@Query("select f from funcionario f where f.id =:id")
 	Optional<Funcionario> findById(@Param("id") String id);
+	
+	Funcionario findByUsername(String username);
 }

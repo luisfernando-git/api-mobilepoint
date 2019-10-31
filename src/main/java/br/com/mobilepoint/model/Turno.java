@@ -14,7 +14,7 @@ public class Turno {
 	
 	private String descricao;
 	
-	private Date horarioInicio = new Date();
+	private Date horarioInicio = new Date(); 
 	
 	private Date horarioTermino = new Date();
 	

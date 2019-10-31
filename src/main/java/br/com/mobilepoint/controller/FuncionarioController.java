@@ -3,6 +3,7 @@ package br.com.mobilepoint.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import br.com.mobilepoint.utils.NegocioException;
 
 @RestController
 @RequestMapping("api/mobilepoint/funcionarios")
+@CrossOrigin("*")
 public class FuncionarioController {
 
 	@Autowired
@@ -26,6 +28,11 @@ public class FuncionarioController {
 	@GetMapping
 	public List<Funcionario> getAll() {
 		return repo.findAll();
+	}
+	
+	@GetMapping("/byUsername/{username}")
+	public Funcionario getByUsername(@PathVariable("username") String username) {
+		return repo.findByUsername(username);
 	}
 	
 	@PostMapping

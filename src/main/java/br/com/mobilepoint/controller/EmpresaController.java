@@ -41,8 +41,7 @@ public class EmpresaController {
 	
 	@GetMapping("/{id}")
 	public Empresa getById(@PathVariable("id") String id) {
-		return repo.findById(id).get();
-		
+		return repo.findById(id).get();	
 	}
 	
 	@PutMapping("/{id}")

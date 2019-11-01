@@ -13,36 +13,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.mobilepoint.model.Funcionario;
-import br.com.mobilepoint.model.Turno;
-import br.com.mobilepoint.repository.FuncionarioRepository;
+import br.com.mobilepoint.model.Ponto;
+import br.com.mobilepoint.repository.PontoRepository;
 import br.com.mobilepoint.utils.NegocioException;
 
 @RestController
-@RequestMapping("api/mobilepoint/funcionarios")
+@RequestMapping("api/mobilepoint/pontos")
 @CrossOrigin("*")
-public class FuncionarioController {
-
+public class PontoController {
+	
 	@Autowired
-	private FuncionarioRepository repo;
+	private PontoRepository repo;
 	
 	@GetMapping
-	public List<Funcionario> getAll() {
+	public List<Ponto> getAll() {
 		return repo.findAll();
 	}
 	
-	@GetMapping("/byUsername/{username}")
-	public Funcionario getByUsername(@PathVariable("username") String username) {
-		return repo.findByUsername(username);
-	}
-	
-	@GetMapping("/byTurno/{turno}")
-	public List<Funcionario> getByTurno(@PathVariable("turno") Turno turno) {
-		return repo.findByTurno(turno);
-	}
-	
 	@PostMapping
-	public String create(@RequestBody Funcionario novo) {
+	public String create(@RequestBody Ponto novo) {
 		repo.save(novo);
 		return novo.getId();
 	}
@@ -53,15 +42,15 @@ public class FuncionarioController {
 	}
 	
 	@GetMapping("/{id}")
-	public Funcionario getById(@PathVariable("id") String id) {
+	public Ponto getById(@PathVariable("id") String id) {
 		return repo.findById(id).get();
 	}
 	
 	@PutMapping("/{id}")
-	public void update(@PathVariable("id") String id, @RequestBody Funcionario funcionario) {
-		if (!id.equals(funcionario.getId())) {
-			throw new NegocioException("Id do funcionario está incorreto!");
+	public void update(@PathVariable("id") String id, @RequestBody Ponto ponto) {
+		if (!id.equals(ponto.getId())) {
+			throw new NegocioException("Id do ponto está incorreto!");
 		}
-		repo.save(funcionario);
+		repo.save(ponto);
 	}
 }

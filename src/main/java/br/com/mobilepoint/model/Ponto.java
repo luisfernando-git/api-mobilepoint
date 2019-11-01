@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name="atividade")
-public class PontoBatido {
+@Entity(name="ponto")
+public class Ponto {
 
 	@Id
 	private String id;
@@ -28,7 +28,7 @@ public class PontoBatido {
 	@JoinColumn(name = "funcionario_fk")
 	private Funcionario funcionario;
 	
-	public PontoBatido() {
+	public Ponto() {
 		this.id = UUID.randomUUID().toString();
 	}
 
@@ -109,7 +109,7 @@ public class PontoBatido {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PontoBatido other = (PontoBatido) obj;
+		Ponto other = (Ponto) obj;
 		if (chegada == null) {
 			if (other.chegada != null)
 				return false;

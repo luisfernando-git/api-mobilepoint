@@ -46,10 +46,10 @@ public class Funcionario {
 	@JoinColumn(name = "turno_fk")
 	private Turno turno;
 	
-	@OneToMany(targetEntity = PontoBatido.class, fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(targetEntity = Ponto.class, fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinTable(name="funcionario_pontos", joinColumns = @JoinColumn(name = "funcionario_id"), inverseJoinColumns = @JoinColumn(name = "pontos_id"))
 	@OrderColumn(name="funcionario")
-	private List<PontoBatido> pontosBatidos = new ArrayList<PontoBatido>();
+	private List<Ponto> pontos = new ArrayList<Ponto>();
 	
 	private boolean administrator = false;
 	
@@ -139,12 +139,12 @@ public class Funcionario {
 		this.ativo = ativo;
 	}
 
-	public List<PontoBatido> getPontosBatidos() {
-		return pontosBatidos;
+	public List<Ponto> getPontos() {
+		return pontos;
 	}
 
-	public void setPontosBatidos(List<PontoBatido> pontosBatidos) {
-		this.pontosBatidos = pontosBatidos;
+	public void setPontos(List<Ponto> pontos) {
+		this.pontos = pontos;
 	}
 
 	public String getEmail() {

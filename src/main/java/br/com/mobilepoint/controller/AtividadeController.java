@@ -13,38 +13,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.mobilepoint.model.Funcionario;
-import br.com.mobilepoint.model.Turno;
-import br.com.mobilepoint.repository.FuncionarioRepository;
+import br.com.mobilepoint.model.Atividade;
+import br.com.mobilepoint.repository.AtividadeRepository;
 import br.com.mobilepoint.utils.NegocioException;
 
 @RestController
-@RequestMapping("api/mobilepoint/funcionarios")
+@RequestMapping("api/mobilepoint/atividades")
 @CrossOrigin("*")
-public class FuncionarioController {
-
+public class AtividadeController {
+	
 	@Autowired
-	private FuncionarioRepository repo;
+	private AtividadeRepository repo;
 	
 	@GetMapping
-	public List<Funcionario> getAll() {
+	public List<Atividade> getAll() {
 		return repo.findAll();
 	}
 	
-	@GetMapping("/byUsername/{username}")
-	public Funcionario getByUsername(@PathVariable("username") String username) {
-		return repo.findByUsername(username);
-	}
-	
-	@GetMapping("/byTurno/{turno}")
-	public List<Funcionario> getByTurno(@PathVariable("turno") Turno turno) {
-		return repo.findByTurno(turno);
-	}
-	
 	@PostMapping
-	public String create(@RequestBody Funcionario novo) {
-		repo.save(novo);
-		return novo.getId();
+	public String create(@RequestBody Atividade nova) {
+		repo.save(nova);
+		return nova.getId();
 	}
 	
 	@DeleteMapping("/{id}")
@@ -53,15 +42,15 @@ public class FuncionarioController {
 	}
 	
 	@GetMapping("/{id}")
-	public Funcionario getById(@PathVariable("id") String id) {
+	public Atividade getById(@PathVariable("id") String id) {
 		return repo.findById(id).get();
 	}
 	
 	@PutMapping("/{id}")
-	public void update(@PathVariable("id") String id, @RequestBody Funcionario funcionario) {
-		if (!id.equals(funcionario.getId())) {
-			throw new NegocioException("Id do funcionario está incorreto!");
+	public void update(@PathVariable("id") String id, @RequestBody Atividade atividade) {
+		if (!id.equals(atividade.getId())) {
+			throw new NegocioException("Id da atividade está incorreto!");
 		}
-		repo.save(funcionario);
+		repo.save(atividade);
 	}
 }

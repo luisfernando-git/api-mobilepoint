@@ -8,15 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity(name="ponto")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Ponto {
 
 	@Id
 	private String id;
 	
 	private Date chegada; 
-	
-	private Date saida;
 	
 	private Integer tempoAtraso;
 	
@@ -27,6 +28,8 @@ public class Ponto {
 	@ManyToOne(targetEntity = Funcionario.class)
 	@JoinColumn(name = "funcionario_fk")
 	private Funcionario funcionario;
+	
+	private String tipoPonto;
 	
 	public Ponto() {
 		this.id = UUID.randomUUID().toString();
@@ -46,14 +49,6 @@ public class Ponto {
 
 	public void setChegada(Date chegada) {
 		this.chegada = chegada;
-	}
-
-	public Date getSaida() {
-		return saida;
-	}
-
-	public void setSaida(Date saida) {
-		this.saida = saida;
 	}
 
 	public Integer getTempoAtraso() {
@@ -88,6 +83,14 @@ public class Ponto {
 		this.funcionario = funcionario;
 	}
 
+	public String getTipoPonto() {
+		return tipoPonto;
+	}
+
+	public void setTipoPonto(String tipoPonto) {
+		this.tipoPonto = tipoPonto;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -96,7 +99,6 @@ public class Ponto {
 		result = prime * result + ((funcionario == null) ? 0 : funcionario.hashCode());
 		result = prime * result + ((latitude == null) ? 0 : latitude.hashCode());
 		result = prime * result + ((longitude == null) ? 0 : longitude.hashCode());
-		result = prime * result + ((saida == null) ? 0 : saida.hashCode());
 		result = prime * result + ((tempoAtraso == null) ? 0 : tempoAtraso.hashCode());
 		return result;
 	}
@@ -129,11 +131,6 @@ public class Ponto {
 			if (other.longitude != null)
 				return false;
 		} else if (!longitude.equals(other.longitude))
-			return false;
-		if (saida == null) {
-			if (other.saida != null)
-				return false;
-		} else if (!saida.equals(other.saida))
 			return false;
 		if (tempoAtraso == null) {
 			if (other.tempoAtraso != null)

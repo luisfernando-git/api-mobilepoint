@@ -1,22 +1,18 @@
 package br.com.mobilepoint.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity(name="funcionario")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Funcionario {
 
 	@Id
@@ -45,11 +41,6 @@ public class Funcionario {
 	@ManyToOne(targetEntity = Turno.class)
 	@JoinColumn(name = "turno_fk")
 	private Turno turno;
-	
-	@OneToMany(targetEntity = Ponto.class, fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
-	@JoinTable(name="funcionario_pontos", joinColumns = @JoinColumn(name = "funcionario_id"), inverseJoinColumns = @JoinColumn(name = "pontos_id"))
-	@OrderColumn(name="funcionario")
-	private List<Ponto> pontos = new ArrayList<Ponto>();
 	
 	private boolean administrator = false;
 	
@@ -137,14 +128,6 @@ public class Funcionario {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
-	}
-
-	public List<Ponto> getPontos() {
-		return pontos;
-	}
-
-	public void setPontos(List<Ponto> pontos) {
-		this.pontos = pontos;
 	}
 
 	public String getEmail() {

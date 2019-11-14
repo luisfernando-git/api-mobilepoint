@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.mobilepoint.model.Funcionario;
 import br.com.mobilepoint.model.Ponto;
+import br.com.mobilepoint.repository.FuncionarioRepository;
 import br.com.mobilepoint.repository.PontoRepository;
 import br.com.mobilepoint.utils.NegocioException;
 
@@ -25,9 +27,18 @@ public class PontoController {
 	@Autowired
 	private PontoRepository repo;
 	
+	@Autowired
+	private FuncionarioRepository funcionarioRepository;
+	
 	@GetMapping
 	public List<Ponto> getAll() {
 		return repo.findAll();
+	}
+	
+	@GetMapping("/byFuncionario/{idFuncionario}")
+	public List<Ponto> getByFuncionario(@PathVariable("idFuncionario") String idFuncionario) {
+		Funcionario funcionario = funcionarioRepository.getOne(idFuncionario);
+		return repo.findByFuncionario(funcionario);
 	}
 	
 	@PostMapping
